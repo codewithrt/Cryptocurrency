@@ -1,12 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component,useContext } from 'react'
 import { connect } from 'react-redux'
-import Chart from 'react-apexcharts'
 import Spinner from './Spinner'
-import { chartOptions, dummyData } from './PriceChart.config'
-import {
-  priceChartLoadedSelector,
-  priceChartSelector
-} from '../store/selectors'
+import {chartOptions} from "./PriceChartconfig"
+import Chart from 'react-apexcharts'
+import { Context } from '../Context/Context'
 
 const priceSymbol = (lastPriceChange) => {
   let output
@@ -29,27 +26,29 @@ const showPriceChart = (priceChart) => {
   )
 }
 
-class PriceChart extends Component {
-  render() {
+const PriceChart=()=> {
+    const {graphData} = useContext(Context)
+  
     return (
       <div className="card bg-dark text-white">
         <div className="card-header">
           Price Chart
         </div>
         <div className="card-body">
-          {this.props.priceChartLoaded ? showPriceChart(this.props.priceChart) : <Spinner />}
+          {graphData ? showPriceChart(graphData) : <Spinner />}
         </div>
       </div>
     )
   }
-}
 
-function mapStateToProps(state) {
 
-  return {
-    priceChartLoaded: priceChartLoadedSelector(state),
-    priceChart: priceChartSelector(state),
-  }
-}
+// function mapStateToProps(state) {
 
-export default connect(mapStateToProps)(PriceChart)
+//   return {
+//     priceChartLoaded: priceChartLoadedSelector(state),
+//     priceChart: priceChartSelector(state),
+//   }
+// }
+
+// export default connect(mapStateToProps)(PriceChart)
+export default PriceChart;

@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component,useContext } from 'react'
 import { connect } from 'react-redux'
 import Spinner from './Spinner'
-import {
-  filledOrdersLoadedSelector,
-  filledOrdersSelector
-} from '../store/selectors'
+import { Context } from '../Context/Context'
+// import {
+//   filledOrdersLoadedSelector,
+//   filledOrdersSelector
+// } from '../store/selectors'
 
 const showFilledOrders = (filledOrders) => {
   return(
@@ -22,8 +23,9 @@ const showFilledOrders = (filledOrders) => {
   )
 }
 
-class Trades extends Component {
-  render() {
+const Trades =()=> {
+
+  const {Orders} = useContext(Context)
     return (
       <div className="vertical">
         <div className="card bg-dark text-white">
@@ -39,20 +41,20 @@ class Trades extends Component {
                   <th>DAPP/ETH</th>
                 </tr>
               </thead>
-              { this.props.filledOrdersLoaded ? showFilledOrders(this.props.filledOrders) : <Spinner type="table" />}
+              { Orders? showFilledOrders(Orders) : <Spinner type="table" />}
             </table>
           </div>
         </div>
       </div>
     )
-  }
 }
 
-function mapStateToProps(state) {
-  return {
-    filledOrdersLoaded: filledOrdersLoadedSelector(state),
-    filledOrders: filledOrdersSelector(state),
-  }
-}
+// function mapStateToProps(state) {
+//   return {
+//     filledOrdersLoaded: filledOrdersLoadedSelector(state),
+//     filledOrders: filledOrdersSelector(state),
+//   }
+// }
 
-export default connect(mapStateToProps)(Trades)
+// export default connect(mapStateToProps)(Trades)
+export default Trades;
